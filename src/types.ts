@@ -1,0 +1,14 @@
+export interface MenuItem {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  popular?: boolean;
+}
+
+export interface MenuCategory {
+  id: string;
+  title: string;
+  iconName: string;
+  items: MenuItem[];
+}
