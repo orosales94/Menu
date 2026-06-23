@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Coffee, Utensils, CupSoda, Cake, Pizza, Heart, Clock, MapPin, Phone } from 'lucide-react';
+import { Coffee, Utensils, CupSoda, Cake, Pizza, Heart, Clock, MapPin, Phone, Wine, Printer } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { menuData } from './data';
 
@@ -9,9 +9,11 @@ const iconMap: Record<string, React.ReactNode> = {
   CupSoda: <CupSoda size={20} />,
   Cake: <Cake size={20} />,
   Pizza: <Pizza size={20} />,
+  Wine: <Wine size={20} />,
 };
 
-const formatPrice = (price: number) => {
+const formatPrice = (price: number | string) => {
+  if (typeof price === 'string') return price;
   return new Intl.NumberFormat('es-CR', {
     style: 'currency',
     currency: 'CRC',
@@ -53,67 +55,79 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-tita-50 font-sans text-gray-800">
+    <div className="min-h-screen bg-[#FDFCF8] text-[#2D2926] font-serif border-[8px] sm:border-[12px] border-[#F2EDE4]">
       {/* Header / Hero */}
-      <header className="relative bg-tita-800 text-white overflow-hidden">
-        {/* Background Pattern/Overlay */}
-        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }}></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-tita-900 to-transparent opacity-80"></div>
-        
-        <div className="relative max-w-4xl mx-auto px-4 py-16 sm:py-24 text-center">
+      <header className="px-6 sm:px-12 pt-10 pb-6 border-b border-[#2D2926]">
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-baseline gap-6">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
+            className="flex flex-col sm:flex-row items-start sm:items-center gap-6"
           >
-            <div className="inline-flex items-center justify-center p-3 bg-tita-700/50 rounded-full mb-6 ring-1 ring-tita-400/30 backdrop-blur-sm">
-              <Heart className="text-tita-200 fill-tita-200" size={24} />
+            <div className="w-24 h-24 sm:w-32 sm:h-32 shrink-0 rounded-full overflow-hidden border-4 border-[#F2EDE4] shadow-sm bg-white print:border-2 print:border-black">
+              <img src="/logo.jpg" alt="Soda Tita Rosa Logo" className="w-full h-full object-contain p-1" />
             </div>
-            <h1 className="font-serif text-5xl sm:text-7xl font-bold mb-4 tracking-tight drop-shadow-sm">
-              Soda Tita Rosa
-            </h1>
-            <p className="text-tita-100 text-lg sm:text-xl max-w-lg mx-auto font-medium">
-              Sabor a casa, hecho con amor y la mejor cuchara tradicional.
-            </p>
+            <div>
+              <p className="text-[10px] tracking-[0.3em] uppercase font-sans mb-1 opacity-60">La Fortuna, San Carlos, CR</p>
+              <h1 className="text-5xl sm:text-7xl font-bold tracking-tighter leading-none text-[#C1444E] mb-2">
+                Soda Tita Rosa
+              </h1>
+              <h2 className="text-2xl sm:text-4xl font-bold tracking-tighter leading-none text-[#2D2926]">
+                & Heladería Kiwii
+              </h2>
+            </div>
           </motion.div>
 
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.6 }}
-            className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-8 mt-10 text-sm text-tita-200"
+            className="text-left md:text-right"
           >
-            <div className="flex items-center justify-center gap-2">
-              <Clock size={16} />
-              <span>Lun - Sab: 6:00 AM - 4:00 PM</span>
+            <p className="italic text-lg">Tradición tica y dulce sabor</p>
+            <p className="text-[10px] tracking-[0.2em] uppercase font-sans mt-2">Menú Completo</p>
+            
+            <div className="flex flex-col md:flex-row gap-2 md:gap-4 mt-6 md:mt-2 text-[10px] font-sans tracking-widest uppercase opacity-60 md:justify-end">
+              <div className="flex items-center gap-2">
+                <Clock size={12} />
+                <span>Lun - Sab: 6AM - 4PM</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Phone size={12} />
+                <span>+(506) 2222-3333</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <MapPin size={12} />
+                <span>La Fortuna</span>
+              </div>
             </div>
-            <div className="flex items-center justify-center gap-2">
-              <Phone size={16} />
-              <span>+(506) 2222-3333</span>
-            </div>
-            <div className="flex items-center justify-center gap-2">
-              <MapPin size={16} />
-              <span>Frente a la plaza principal</span>
-            </div>
+            
+            <button 
+              onClick={() => window.print()}
+              className="mt-4 inline-flex items-center gap-2 px-4 py-2 border border-[#2D2926] text-[#2D2926] text-xs uppercase tracking-widest font-sans font-bold hover:bg-[#2D2926] hover:text-[#FDFCF8] transition-colors print:hidden"
+            >
+              <Printer size={14} />
+              Imprimir Menú (PDF)
+            </button>
           </motion.div>
         </div>
       </header>
 
       {/* Sticky Navigation */}
-      <div className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md py-2' : 'bg-tita-50 py-4 border-b border-tita-200'}`}>
-        <div className="max-w-4xl mx-auto px-4">
-          <div className="flex overflow-x-auto hide-scrollbar gap-2 pb-2 sm:pb-0 sm:flex-wrap sm:justify-center">
+      <div className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-[#FDFCF8] shadow-sm border-b border-[#2D2926] py-4' : 'bg-[#FDFCF8] border-b border-[#2D2926] py-6'}`}>
+        <div className="max-w-5xl mx-auto px-6 sm:px-12">
+          <div className="flex overflow-x-auto hide-scrollbar gap-8 pb-2 sm:pb-0 sm:flex-wrap">
             {menuData.map((category) => (
               <button
                 key={category.id}
                 onClick={() => scrollToCategory(category.id)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-full whitespace-nowrap transition-colors text-sm font-medium
+                className={`flex items-center gap-2 whitespace-nowrap transition-colors text-[11px] uppercase tracking-widest font-sans font-bold
                   ${activeCategory === category.id 
-                    ? 'bg-tita-600 text-white shadow-sm' 
-                    : 'bg-white text-gray-600 hover:bg-tita-100 hover:text-tita-800 border border-tita-200'
+                    ? 'text-[#C1444E] border-b-2 border-[#C1444E] pb-1' 
+                    : 'text-[#2D2926] opacity-60 hover:opacity-100 pb-1 border-b-2 border-transparent'
                   }`}
               >
-                {iconMap[category.iconName]}
                 {category.title}
               </button>
             ))}
@@ -122,50 +136,50 @@ export default function App() {
       </div>
 
       {/* Menu Content */}
-      <main className="max-w-4xl mx-auto px-4 py-12">
+      <main className="max-w-5xl mx-auto px-6 sm:px-12 py-16">
         {menuData.map((category, index) => (
           <motion.section 
             key={category.id}
             id={`section-${category.id}`}
-            className="mb-16 scroll-mt-24"
+            className="mb-24 scroll-mt-32"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
           >
-            <div className="flex items-center gap-3 mb-8">
-              <div className="p-3 bg-tita-100 text-tita-700 rounded-xl">
-                {iconMap[category.iconName]}
-              </div>
-              <h2 className="font-serif text-3xl font-bold text-gray-900">
+            <div className="mb-10 text-center sm:text-left">
+              <h2 className="text-[11px] uppercase tracking-[0.4em] font-sans mb-1 opacity-60">Categoría</h2>
+              <h3 className="text-4xl font-bold italic border-b-2 border-[#C1444E] pb-2 inline-block">
                 {category.title}
-              </h2>
+              </h3>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 gap-x-16 gap-y-12">
               {category.items.map((item) => (
                 <motion.div 
                   key={item.id}
-                  whileHover={{ y: -2 }}
-                  className="bg-white p-5 rounded-2xl shadow-sm border border-tita-100/50 hover:shadow-md transition-shadow relative overflow-hidden group"
+                  className="group relative"
                 >
-                  <div className="absolute top-0 left-0 w-1 h-full bg-tita-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  {item.popular && (
+                    <div className="absolute -left-4 top-0 w-1 h-full bg-[#C1444E]"></div>
+                  )}
                   
-                  <div className="flex justify-between items-start gap-4 mb-2">
-                    <h3 className="font-semibold text-lg text-gray-900 pr-2">
+                  <div className="flex justify-between items-end mb-1 border-b border-dotted border-[#2D2926]">
+                    <h4 className="text-xl md:text-2xl font-bold pr-4 pb-1">
                       {item.name}
-                      {item.popular && (
-                        <span className="inline-flex items-center gap-1 ml-2 px-2 py-0.5 rounded text-xs font-medium bg-amber-100 text-amber-800 align-middle">
-                          <Heart size={10} className="fill-amber-500" />
-                          Popular
-                        </span>
-                      )}
-                    </h3>
-                    <span className="font-semibold text-tita-700 whitespace-nowrap bg-tita-50 px-2 py-1 rounded-lg">
+                    </h4>
+                    <span className="font-sans font-bold text-lg text-[#C1444E] pb-1">
                       {formatPrice(item.price)}
                     </span>
                   </div>
-                  <p className="text-gray-500 text-sm leading-relaxed">
+                  
+                  {item.popular && (
+                    <p className="text-[10px] uppercase tracking-widest font-sans mb-2 font-bold text-[#C1444E] mt-2">
+                      Lo Más Pedido
+                    </p>
+                  )}
+                  
+                  <p className={`text-sm leading-relaxed opacity-80 italic ${!item.popular ? 'mt-2' : ''}`}>
                     {item.description}
                   </p>
                 </motion.div>
@@ -176,11 +190,17 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-gray-400 py-12 text-center text-sm">
-        <div className="max-w-4xl mx-auto px-4">
-          <Heart className="mx-auto mb-4 text-tita-600 opacity-50" size={24} />
-          <p className="mb-2">Soda Tita Rosa &copy; {new Date().getFullYear()}</p>
-          <p>Hecho con amor y sazón tradicional.</p>
+      <footer className="bg-[#F2EDE4] border-t border-[#2D2926] p-10 flex flex-col justify-between items-center text-[#2D2926]">
+        <div className="text-[10px] uppercase tracking-widest text-center">
+          <p className="mb-1">Gracias por su visita</p>
+          <p className="font-bold text-[#C1444E]">Prohibido irse con hambre</p>
+        </div>
+        
+        {/* Decorative Footer Elements */}
+        <div className="flex gap-4 items-center opacity-20 pointer-events-none mt-8">
+          <div className="h-[1px] w-24 sm:w-48 bg-[#2D2926]"></div>
+          <div className="w-2 h-2 rounded-full bg-[#C1444E]"></div>
+          <div className="h-[1px] w-24 sm:w-48 bg-[#2D2926]"></div>
         </div>
       </footer>
       
