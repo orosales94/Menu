@@ -27,6 +27,13 @@ export default function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [lang, setLang] = useState<'es' | 'en'>(() => {
+    return (localStorage.getItem('sodaTitaRosaLang') as 'es' | 'en') || 'es';
+  });
+
+  useEffect(() => {
+    localStorage.setItem('sodaTitaRosaLang', lang);
+  }, [lang]);
 
   useEffect(() => {
     // Simulate loading time for smooth entrance
@@ -153,13 +160,13 @@ export default function App() {
             transition={{ delay: 0.3, duration: 0.6 }}
             className="text-left md:text-right"
           >
-            <p className="italic text-lg">Tradición tica y dulce sabor</p>
-            <p className="text-[10px] tracking-[0.2em] uppercase font-sans mt-2">Menú Completo</p>
+            <p className="italic text-lg">{lang === 'es' ? 'Tradición tica y dulce sabor' : 'Costa Rican tradition and sweet flavor'}</p>
+            <p className="text-[10px] tracking-[0.2em] uppercase font-sans mt-2">{lang === 'es' ? 'Menú Completo' : 'Full Menu'}</p>
             
             <div className="flex flex-col md:flex-row gap-2 md:gap-4 mt-6 md:mt-2 text-[10px] font-sans tracking-widest uppercase opacity-60 md:justify-end">
               <div className="flex items-center gap-2">
                 <Clock size={12} />
-                <span>Lun - Sab: 6AM - 4PM</span>
+                <span>{lang === 'es' ? 'Lun - Sab' : 'Mon - Sat'}: 6AM - 4PM</span>
               </div>
               <div className="flex items-center gap-2">
                 <Phone size={12} />
@@ -171,13 +178,31 @@ export default function App() {
               </div>
             </div>
             
-            <button 
-              onClick={() => window.print()}
-              className="mt-4 inline-flex items-center gap-2 px-4 py-2 border border-[#110B0A] text-[#110B0A] text-xs uppercase tracking-widest font-sans font-bold hover:bg-[#110B0A] hover:text-[#F8F8F7] transition-colors print:hidden"
-            >
-              <Printer size={14} />
-              Imprimir Menú (PDF)
-            </button>
+            <div className="flex gap-4 items-center justify-start md:justify-end mt-4">
+              <div className="flex items-center gap-2 text-xs font-sans font-bold print:hidden">
+                <button
+                  onClick={() => setLang('es')}
+                  className={`px-2 py-1 transition-colors ${lang === 'es' ? 'bg-[#110B0A] text-[#F8F8F7]' : 'text-[#110B0A] hover:bg-black/10'}`}
+                >
+                  ES
+                </button>
+                <span className="opacity-30">|</span>
+                <button
+                  onClick={() => setLang('en')}
+                  className={`px-2 py-1 transition-colors ${lang === 'en' ? 'bg-[#110B0A] text-[#F8F8F7]' : 'text-[#110B0A] hover:bg-black/10'}`}
+                >
+                  EN
+                </button>
+              </div>
+
+              <button 
+                onClick={() => window.print()}
+                className="inline-flex items-center gap-2 px-4 py-2 border border-[#110B0A] text-[#110B0A] text-xs uppercase tracking-widest font-sans font-bold hover:bg-[#110B0A] hover:text-[#F8F8F7] transition-colors print:hidden"
+              >
+                <Printer size={14} />
+                {lang === 'es' ? 'Imprimir Menú (PDF)' : 'Print Menu (PDF)'}
+              </button>
+            </div>
           </motion.div>
         </div>
       </header>
@@ -189,7 +214,7 @@ export default function App() {
             <div className="relative w-full md:w-72 print:hidden">
               <input
                 type="text"
-                placeholder="Buscar en el menú..."
+                placeholder={lang === 'es' ? 'Buscar en el menú...' : 'Search menu...'}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full bg-transparent border border-[#110B0A] text-[#110B0A] px-4 py-2 pl-10 focus:outline-none focus:ring-1 focus:ring-[#110B0A] font-sans text-sm placeholder:text-[#110B0A]/50 transition-colors"
@@ -208,8 +233,8 @@ export default function App() {
                     : 'text-[#110B0A] opacity-60 hover:opacity-100 pb-1 border-b-2 border-transparent'
                   }`}
               >
-                <span className="text-[11px] tracking-widest">{category.title}</span>
-                {category.titleEn && <span className="text-[9px] tracking-wider opacity-70 normal-case italic">{category.titleEn}</span>}
+                <span className="text-[11px] tracking-widest">{lang === 'es' ? category.title : (category.titleEn || category.title)}</span>
+                {category.titleEn && <span className="text-[9px] tracking-wider opacity-70 normal-case italic">{lang === 'es' ? category.titleEn : category.title}</span>}
               </button>
             ))}
           </div>
@@ -220,7 +245,7 @@ export default function App() {
       <main className="max-w-5xl mx-auto px-6 sm:px-12 py-16">
         {filteredMenuData.length === 0 ? (
           <div className="text-center py-20">
-            <p className="text-lg opacity-60 font-sans">No se encontraron platillos que coincidan con la búsqueda.</p>
+            <p className="text-lg opacity-60 font-sans">{lang === 'es' ? 'No se encontraron platillos que coincidan con la búsqueda.' : 'No dishes found matching your search.'}</p>
           </div>
         ) : (
           filteredMenuData.map((category, index) => (
@@ -234,14 +259,14 @@ export default function App() {
             transition={{ duration: 0.5 }}
           >
             <div className="mb-10 text-center sm:text-left">
-              <h2 className="text-[11px] uppercase tracking-[0.4em] font-sans mb-1 opacity-60">Categoría</h2>
+              <h2 className="text-[11px] uppercase tracking-[0.4em] font-sans mb-1 opacity-60">{lang === 'es' ? 'Categoría' : 'Category'}</h2>
               <div className="border-b-2 border-[#110B0A] pb-2 inline-block">
                 <h3 className="text-4xl font-bold italic inline">
-                  {category.title}
+                  {lang === 'es' ? category.title : (category.titleEn || category.title)}
                 </h3>
                 {category.titleEn && (
                   <span className="text-2xl font-bold italic opacity-40 ml-3">
-                    / {category.titleEn}
+                    / {lang === 'es' ? category.titleEn : category.title}
                   </span>
                 )}
               </div>
@@ -284,11 +309,11 @@ export default function App() {
                   <div className="flex justify-between items-end mb-1 border-b border-dotted border-[#110B0A]">
                     <div className="pb-1 pr-4">
                       <h4 className="text-xl md:text-2xl font-bold inline">
-                        {item.name}
+                        {lang === 'es' ? item.name : (item.nameEn || item.name)}
                       </h4>
                       {item.nameEn && (
                         <span className="text-lg md:text-xl font-bold italic opacity-50 ml-2">
-                          / {item.nameEn}
+                          / {lang === 'es' ? item.nameEn : item.name}
                         </span>
                       )}
                     </div>
@@ -299,17 +324,17 @@ export default function App() {
                   
                   {item.popular && (
                     <p className="text-[10px] uppercase tracking-widest font-sans mb-2 font-bold text-[#110B0A] mt-2">
-                      Lo Más Pedido / Top Choice
+                      {lang === 'es' ? 'Lo Más Pedido' : 'Top Choice'}
                     </p>
                   )}
                   
                   <div className={`mt-2 ${!item.popular ? 'pt-1' : ''}`}>
                     <p className="text-sm leading-relaxed opacity-80 italic mb-1">
-                      {item.description}
+                      {lang === 'es' ? item.description : (item.descriptionEn || item.description)}
                     </p>
                     {item.descriptionEn && (
                       <p className="text-[13px] leading-relaxed opacity-60 font-sans">
-                        {item.descriptionEn}
+                        {lang === 'es' ? item.descriptionEn : item.description}
                       </p>
                     )}
                   </div>
@@ -330,13 +355,13 @@ export default function App() {
             className="mb-24 print:hidden"
           >
             <div className="mb-10 text-center sm:text-left">
-              <h2 className="text-[11px] uppercase tracking-[0.4em] font-sans mb-1 opacity-60">Galería</h2>
+              <h2 className="text-[11px] uppercase tracking-[0.4em] font-sans mb-1 opacity-60">{lang === 'es' ? 'Galería' : 'Gallery'}</h2>
               <div className="border-b-2 border-[#110B0A] pb-2 inline-block">
                 <h3 className="text-4xl font-bold italic inline">
-                  Nuestros Platillos
+                  {lang === 'es' ? 'Nuestros Platillos' : 'Our Dishes'}
                 </h3>
                 <span className="text-2xl font-bold italic opacity-40 ml-3">
-                  / Our Dishes
+                  / {lang === 'es' ? 'Our Dishes' : 'Nuestros Platillos'}
                 </span>
               </div>
             </div>
@@ -365,13 +390,13 @@ export default function App() {
             className="mb-12 print:hidden"
           >
             <div className="mb-10 text-center sm:text-left">
-              <h2 className="text-[11px] uppercase tracking-[0.4em] font-sans mb-1 opacity-60">Testimonios</h2>
+              <h2 className="text-[11px] uppercase tracking-[0.4em] font-sans mb-1 opacity-60">{lang === 'es' ? 'Testimonios' : 'Testimonials'}</h2>
               <div className="border-b-2 border-[#110B0A] pb-2 inline-block">
                 <h3 className="text-4xl font-bold italic inline">
-                  Opiniones de nuestros clientes
+                  {lang === 'es' ? 'Opiniones de nuestros clientes' : 'Customer Reviews'}
                 </h3>
                 <span className="text-2xl font-bold italic opacity-40 ml-3">
-                  / Reviews
+                  / {lang === 'es' ? 'Reviews' : 'Opiniones de nuestros clientes'}
                 </span>
               </div>
             </div>
@@ -410,8 +435,8 @@ export default function App() {
       {/* Footer */}
       <footer className="bg-[#F3C324] border-t border-[#110B0A] p-10 flex flex-col justify-between items-center text-[#110B0A]">
         <div className="text-[10px] uppercase tracking-widest text-center">
-          <p className="mb-1">Gracias por su visita</p>
-          <p className="font-bold text-[#110B0A]">Prohibido irse con hambre</p>
+          <p className="mb-1">{lang === 'es' ? 'Gracias por su visita' : 'Thanks for your visit'}</p>
+          <p className="font-bold text-[#110B0A]">{lang === 'es' ? 'Prohibido irse con hambre' : 'Leaving hungry is forbidden'}</p>
         </div>
         
         {/* Decorative Footer Elements */}
