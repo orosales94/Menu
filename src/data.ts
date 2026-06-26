@@ -139,3 +139,42 @@ export const galleryImages: { url: string; title: string, titleEn?: string }[] =
   //   titleEn: 'Our famous Casado' 
   // },
 ];
+
+export interface Review {
+  id: string;
+  author: string;
+  rating: number;
+  text: string;
+  date: string;
+}
+
+export const reviewsData: Review[] = [
+  {
+    id: 'r1',
+    author: 'Carlos M.',
+    rating: 5,
+    text: '¡Excelente comida típica! El casado con pollo estaba delicioso y el fresco de guanábana muy natural. El servicio es rápido y muy amable. Muy recomendado si visitan La Fortuna.',
+    date: 'Hace 2 semanas'
+  },
+  {
+    id: 'r2',
+    author: 'Sarah Jenkins',
+    rating: 5,
+    text: 'Best typical Costa Rican food we had in La Fortuna! The Gallo Pinto was amazing and the portions are huge. Very friendly staff and great prices.',
+    date: 'Hace 1 mes'
+  },
+  {
+    id: 'r3',
+    author: 'Diego Castro',
+    rating: 5,
+    text: 'Un lugar muy acogedor, comida muy rica a muy buen precio. Las empanadas son de las mejores que he probado.',
+    date: 'Hace 3 meses'
+  },
+  {
+    id: 'r4',
+    author: 'Maria Fernanda',
+    rating: 4,
+    text: 'Buena relación calidad-precio. Un ambiente familiar y la atención de la dueña es excepcional. Definitivamente volveremos a desayunar aquí.',
+    date: 'Hace 4 meses'
+  }
+];

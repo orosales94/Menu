@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Coffee, Utensils, CupSoda, Cake, Pizza, Heart, Clock, MapPin, Phone, Wine, Printer, MessageCircle, Search } from 'lucide-react';
+import { Coffee, Utensils, CupSoda, Cake, Pizza, Heart, Clock, MapPin, Phone, Wine, Printer, MessageCircle, Search, Star } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { menuData, galleryImages } from './data';
+import { menuData, galleryImages, reviewsData } from './data';
+import logoImg from './logo.png';
 
 const iconMap: Record<string, React.ReactNode> = {
   Coffee: <Coffee size={20} />,
@@ -90,7 +91,7 @@ export default function App() {
               transition={{ duration: 0.5, ease: "easeOut" }}
               className="w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden border-4 border-[#F3C324] shadow-sm bg-white mb-6"
             >
-              <img src="/Menu/logo.png" alt="Soda Tita Rosa Logo" className="w-full h-full object-contain p-2" />
+              <img src={logoImg} alt="Soda Tita Rosa Logo" className="w-full h-full object-contain p-2" />
             </motion.div>
             <motion.h2 
               initial={{ opacity: 0, y: 10 }}
@@ -135,7 +136,7 @@ export default function App() {
             className="flex flex-col sm:flex-row items-start sm:items-center gap-6"
           >
             <div className="w-24 h-24 sm:w-32 sm:h-32 shrink-0 rounded-full overflow-hidden border-4 border-[#F3C324] shadow-sm bg-white print:border-2 print:border-black">
-              <img src="/Menu/logo.png" alt="Soda Tita Rosa Logo" className="w-full h-full object-contain p-1" />
+              <img src={logoImg} alt="Soda Tita Rosa Logo" className="w-full h-full object-contain p-1" />
             </div>
             <div>
               <p className="text-[10px] tracking-[0.3em] uppercase font-sans mb-1 opacity-60">La Fortuna, San Carlos, CR</p>
@@ -349,6 +350,57 @@ export default function App() {
                     {img.titleEn && <p className="text-white/80 font-sans text-sm italic">{img.titleEn}</p>}
                   </div>
                 </div>
+              ))}
+            </div>
+          </motion.section>
+        )}
+
+        {/* Reseñas de Clientes */}
+        {reviewsData && reviewsData.length > 0 && (
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+            className="mb-12 print:hidden"
+          >
+            <div className="mb-10 text-center sm:text-left">
+              <h2 className="text-[11px] uppercase tracking-[0.4em] font-sans mb-1 opacity-60">Testimonios</h2>
+              <div className="border-b-2 border-[#110B0A] pb-2 inline-block">
+                <h3 className="text-4xl font-bold italic inline">
+                  Opiniones de nuestros clientes
+                </h3>
+                <span className="text-2xl font-bold italic opacity-40 ml-3">
+                  / Reviews
+                </span>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              {reviewsData.map((review) => (
+                <motion.div
+                  key={review.id}
+                  whileHover={{ y: -5 }}
+                  className="bg-white border-2 border-[#110B0A] p-6 rounded-lg shadow-[4px_4px_0_0_#110B0A]"
+                >
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <h4 className="font-bold text-lg">{review.author}</h4>
+                      <p className="text-sm opacity-60 font-sans">{review.date}</p>
+                    </div>
+                    <div className="flex gap-1 text-[#F3C324]">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          size={16}
+                          fill={i < review.rating ? "currentColor" : "none"}
+                          className={i < review.rating ? "text-[#F3C324]" : "text-gray-300"}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <p className="italic opacity-80">"{review.text}"</p>
+                </motion.div>
               ))}
             </div>
           </motion.section>
