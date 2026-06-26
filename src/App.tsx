@@ -70,7 +70,7 @@ export default function App() {
             </div>
             <div>
               <p className="text-[10px] tracking-[0.3em] uppercase font-sans mb-1 opacity-60">La Fortuna, San Carlos, CR</p>
-              <h1 className="text-5xl sm:text-7xl font-bold tracking-tighter leading-none text-[#875A45] mb-2">
+              <h1 className="text-5xl sm:text-7xl font-bold tracking-tighter leading-none text-[#110B0A] mb-2">
                 Soda Tita Rosa
               </h1>
               
@@ -122,7 +122,7 @@ export default function App() {
                 onClick={() => scrollToCategory(category.id)}
                 className={`flex flex-col items-start whitespace-nowrap transition-colors uppercase font-sans font-bold
                   ${activeCategory === category.id 
-                    ? 'text-[#875A45] border-b-2 border-[#875A45] pb-1' 
+                    ? 'text-[#110B0A] border-b-2 border-[#F3C324] pb-1' 
                     : 'text-[#110B0A] opacity-60 hover:opacity-100 pb-1 border-b-2 border-transparent'
                   }`}
               >
@@ -148,7 +148,7 @@ export default function App() {
           >
             <div className="mb-10 text-center sm:text-left">
               <h2 className="text-[11px] uppercase tracking-[0.4em] font-sans mb-1 opacity-60">Categoría</h2>
-              <div className="border-b-2 border-[#875A45] pb-2 inline-block">
+              <div className="border-b-2 border-[#110B0A] pb-2 inline-block">
                 <h3 className="text-4xl font-bold italic inline">
                   {category.title}
                 </h3>
@@ -167,7 +167,7 @@ export default function App() {
                   className="group relative"
                 >
                   {item.popular && (
-                    <div className="absolute -left-4 top-0 w-1 h-full bg-[#875A45] hidden sm:block"></div>
+                    <div className="absolute -left-4 top-0 w-1 h-full bg-[#110B0A] hidden sm:block"></div>
                   )}
 
                   {item.imageUrl && (
@@ -187,13 +187,13 @@ export default function App() {
                         </span>
                       )}
                     </div>
-                    <span className="font-sans font-bold text-lg text-[#875A45] pb-1">
+                    <span className="font-sans font-bold text-lg text-[#110B0A] pb-1">
                       {formatPrice(item.price)}
                     </span>
                   </div>
                   
                   {item.popular && (
-                    <p className="text-[10px] uppercase tracking-widest font-sans mb-2 font-bold text-[#875A45] mt-2">
+                    <p className="text-[10px] uppercase tracking-widest font-sans mb-2 font-bold text-[#110B0A] mt-2">
                       Lo Más Pedido / Top Choice
                     </p>
                   )}
@@ -225,7 +225,7 @@ export default function App() {
           >
             <div className="mb-10 text-center sm:text-left">
               <h2 className="text-[11px] uppercase tracking-[0.4em] font-sans mb-1 opacity-60">Galería</h2>
-              <div className="border-b-2 border-[#875A45] pb-2 inline-block">
+              <div className="border-b-2 border-[#110B0A] pb-2 inline-block">
                 <h3 className="text-4xl font-bold italic inline">
                   Nuestros Platillos
                 </h3>
@@ -254,13 +254,13 @@ export default function App() {
       <footer className="bg-[#F3C324] border-t border-[#110B0A] p-10 flex flex-col justify-between items-center text-[#110B0A]">
         <div className="text-[10px] uppercase tracking-widest text-center">
           <p className="mb-1">Gracias por su visita</p>
-          <p className="font-bold text-[#875A45]">Prohibido irse con hambre</p>
+          <p className="font-bold text-[#110B0A]">Prohibido irse con hambre</p>
         </div>
         
         {/* Decorative Footer Elements */}
         <div className="flex gap-4 items-center opacity-20 pointer-events-none mt-8">
           <div className="h-[1px] w-24 sm:w-48 bg-[#110B0A]"></div>
-          <div className="w-2 h-2 rounded-full bg-[#875A45]"></div>
+          <div className="w-2 h-2 rounded-full bg-[#110B0A]"></div>
           <div className="h-[1px] w-24 sm:w-48 bg-[#110B0A]"></div>
         </div>
       </footer>
