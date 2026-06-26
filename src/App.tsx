@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Coffee, Utensils, CupSoda, Cake, Pizza, Heart, Clock, MapPin, Phone, Wine, Printer, MessageCircle } from 'lucide-react';
+import { Coffee, Utensils, CupSoda, Cake, Pizza, Heart, Clock, MapPin, Phone, Wine, Printer, MessageCircle, Search } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { menuData, galleryImages } from './data';
 
@@ -24,19 +24,30 @@ const formatPrice = (price: number | string) => {
 export default function App() {
   const [activeCategory, setActiveCategory] = useState(menuData[0].id);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredMenuData = menuData.map(category => ({
+    ...category,
+    items: category.items.filter(item => 
+      item.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+      (item.nameEn && item.nameEn.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (item.descriptionEn && item.descriptionEn.toLowerCase().includes(searchQuery.toLowerCase()))
+    )
+  })).filter(category => category.items.length > 0);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
       
       // Update active category based on scroll position
-      const sections = menuData.map(cat => document.getElementById(`section-${cat.id}`));
+      const sections = filteredMenuData.map(cat => document.getElementById(`section-${cat.id}`));
       const scrollPosition = window.scrollY + 150; // Offset for sticky header
 
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = sections[i];
         if (section && section.offsetTop <= scrollPosition) {
-          setActiveCategory(menuData[i].id);
+          setActiveCategory(filteredMenuData[i].id);
           break;
         }
       }
@@ -66,7 +77,7 @@ export default function App() {
             className="flex flex-col sm:flex-row items-start sm:items-center gap-6"
           >
             <div className="w-24 h-24 sm:w-32 sm:h-32 shrink-0 rounded-full overflow-hidden border-4 border-[#F3C324] shadow-sm bg-white print:border-2 print:border-black">
-              <img src="./logo.jpg" alt="Soda Tita Rosa Logo" className="w-full h-full object-contain p-1" />
+              <img src="/logo.png" alt="Soda Tita Rosa Logo" className="w-full h-full object-contain p-1" />
             </div>
             <div>
               <p className="text-[10px] tracking-[0.3em] uppercase font-sans mb-1 opacity-60">La Fortuna, San Carlos, CR</p>
@@ -112,11 +123,23 @@ export default function App() {
         </div>
       </header>
 
-      {/* Sticky Navigation */}
+      {/* Sticky Navigation & Search */}
       <div className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-[#F8F8F7] shadow-sm border-b border-[#110B0A] py-4' : 'bg-[#F8F8F7] border-b border-[#110B0A] py-6'}`}>
         <div className="max-w-5xl mx-auto px-6 sm:px-12">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+            <div className="relative w-full md:w-72 print:hidden">
+              <input
+                type="text"
+                placeholder="Buscar en el menú..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full bg-transparent border border-[#110B0A] text-[#110B0A] px-4 py-2 pl-10 focus:outline-none focus:ring-1 focus:ring-[#110B0A] font-sans text-sm placeholder:text-[#110B0A]/50 transition-colors"
+              />
+              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 opacity-50" />
+            </div>
+          </div>
           <div className="flex overflow-x-auto hide-scrollbar gap-8 pb-2 sm:pb-0 sm:flex-wrap">
-            {menuData.map((category) => (
+            {filteredMenuData.map((category) => (
               <button
                 key={category.id}
                 onClick={() => scrollToCategory(category.id)}
@@ -136,8 +159,13 @@ export default function App() {
 
       {/* Menu Content */}
       <main className="max-w-5xl mx-auto px-6 sm:px-12 py-16">
-        {menuData.map((category, index) => (
-          <motion.section 
+        {filteredMenuData.length === 0 ? (
+          <div className="text-center py-20">
+            <p className="text-lg opacity-60 font-sans">No se encontraron platillos que coincidan con la búsqueda.</p>
+          </div>
+        ) : (
+          filteredMenuData.map((category, index) => (
+            <motion.section 
             key={category.id}
             id={`section-${category.id}`}
             className="mb-24 scroll-mt-32"
@@ -212,7 +240,8 @@ export default function App() {
               ))}
             </div>
           </motion.section>
-        ))}
+          ))
+        )}
         
         {/* Galería de Imágenes (Configurable desde data.ts) */}
         {galleryImages.length > 0 && (
