@@ -63,8 +63,8 @@ export const menuData: MenuCategory[] = [
   },
   {
     id: 'heladeria',
-    title: 'Heladería Kiwii',
-    titleEn: 'Kiwii Ice Cream Shop',
+    title: 'Helados y Postres',
+    titleEn: 'Ice Cream & Desserts',
     iconName: 'Cake',
     items: [
       { id: 'hk1', name: 'Batidos Naturales en Agua', nameEn: 'Natural Smoothies with Water', description: 'Banano, Piña, Sandia, Mora, Melón, Fresa, Limonada, Papaya, Frutas mixtas, Kiwi, Guanabana.', descriptionEn: 'Banana, Pineapple, Watermelon, Blackberry, Melon, Strawberry, Lemonade, Papaya, Mixed fruits, Kiwi, Soursop.', price: 1500, popular: true },
