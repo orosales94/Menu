@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Coffee, Utensils, CupSoda, Cake, Pizza, Heart, Clock, MapPin, Phone, Wine, Printer } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { menuData } from './data';
+import { menuData, galleryImages } from './data';
 
 const iconMap: Record<string, React.ReactNode> = {
   Coffee: <Coffee size={20} />,
@@ -122,13 +122,14 @@ export default function App() {
               <button
                 key={category.id}
                 onClick={() => scrollToCategory(category.id)}
-                className={`flex items-center gap-2 whitespace-nowrap transition-colors text-[11px] uppercase tracking-widest font-sans font-bold
+                className={`flex flex-col items-start whitespace-nowrap transition-colors uppercase font-sans font-bold
                   ${activeCategory === category.id 
                     ? 'text-[#C1444E] border-b-2 border-[#C1444E] pb-1' 
                     : 'text-[#2D2926] opacity-60 hover:opacity-100 pb-1 border-b-2 border-transparent'
                   }`}
               >
-                {category.title}
+                <span className="text-[11px] tracking-widest">{category.title}</span>
+                {category.titleEn && <span className="text-[9px] tracking-wider opacity-70 normal-case italic">{category.titleEn}</span>}
               </button>
             ))}
           </div>
@@ -149,9 +150,16 @@ export default function App() {
           >
             <div className="mb-10 text-center sm:text-left">
               <h2 className="text-[11px] uppercase tracking-[0.4em] font-sans mb-1 opacity-60">Categoría</h2>
-              <h3 className="text-4xl font-bold italic border-b-2 border-[#C1444E] pb-2 inline-block">
-                {category.title}
-              </h3>
+              <div className="border-b-2 border-[#C1444E] pb-2 inline-block">
+                <h3 className="text-4xl font-bold italic inline">
+                  {category.title}
+                </h3>
+                {category.titleEn && (
+                  <span className="text-2xl font-bold italic opacity-40 ml-3">
+                    / {category.titleEn}
+                  </span>
+                )}
+              </div>
             </div>
 
             <div className="grid md:grid-cols-2 gap-x-16 gap-y-12">
@@ -161,13 +169,26 @@ export default function App() {
                   className="group relative"
                 >
                   {item.popular && (
-                    <div className="absolute -left-4 top-0 w-1 h-full bg-[#C1444E]"></div>
+                    <div className="absolute -left-4 top-0 w-1 h-full bg-[#C1444E] hidden sm:block"></div>
+                  )}
+
+                  {item.imageUrl && (
+                    <div className="w-full h-48 mb-4 bg-[#F2EDE4] border-2 border-[#2D2926] overflow-hidden rounded-lg print:hidden">
+                      <img src={item.imageUrl} alt={item.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    </div>
                   )}
                   
                   <div className="flex justify-between items-end mb-1 border-b border-dotted border-[#2D2926]">
-                    <h4 className="text-xl md:text-2xl font-bold pr-4 pb-1">
-                      {item.name}
-                    </h4>
+                    <div className="pb-1 pr-4">
+                      <h4 className="text-xl md:text-2xl font-bold inline">
+                        {item.name}
+                      </h4>
+                      {item.nameEn && (
+                        <span className="text-lg md:text-xl font-bold italic opacity-50 ml-2">
+                          / {item.nameEn}
+                        </span>
+                      )}
+                    </div>
                     <span className="font-sans font-bold text-lg text-[#C1444E] pb-1">
                       {formatPrice(item.price)}
                     </span>
@@ -175,18 +196,60 @@ export default function App() {
                   
                   {item.popular && (
                     <p className="text-[10px] uppercase tracking-widest font-sans mb-2 font-bold text-[#C1444E] mt-2">
-                      Lo Más Pedido
+                      Lo Más Pedido / Top Choice
                     </p>
                   )}
                   
-                  <p className={`text-sm leading-relaxed opacity-80 italic ${!item.popular ? 'mt-2' : ''}`}>
-                    {item.description}
-                  </p>
+                  <div className={`mt-2 ${!item.popular ? 'pt-1' : ''}`}>
+                    <p className="text-sm leading-relaxed opacity-80 italic mb-1">
+                      {item.description}
+                    </p>
+                    {item.descriptionEn && (
+                      <p className="text-[13px] leading-relaxed opacity-60 font-sans">
+                        {item.descriptionEn}
+                      </p>
+                    )}
+                  </div>
                 </motion.div>
               ))}
             </div>
           </motion.section>
         ))}
+        
+        {/* Galería de Imágenes (Configurable desde data.ts) */}
+        {galleryImages.length > 0 && (
+          <motion.section 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+            className="mb-24 print:hidden"
+          >
+            <div className="mb-10 text-center sm:text-left">
+              <h2 className="text-[11px] uppercase tracking-[0.4em] font-sans mb-1 opacity-60">Galería</h2>
+              <div className="border-b-2 border-[#C1444E] pb-2 inline-block">
+                <h3 className="text-4xl font-bold italic inline">
+                  Nuestros Platillos
+                </h3>
+                <span className="text-2xl font-bold italic opacity-40 ml-3">
+                  / Our Dishes
+                </span>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {galleryImages.map((img, i) => (
+                <div key={i} className="aspect-square bg-[#F2EDE4] rounded-lg overflow-hidden border-2 border-[#2D2926] relative group">
+                  <img src={img.url} alt={img.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                    <p className="text-white font-bold text-lg leading-tight">{img.title}</p>
+                    {img.titleEn && <p className="text-white/80 font-sans text-sm italic">{img.titleEn}</p>}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.section>
+        )}
       </main>
 
       {/* Footer */}
