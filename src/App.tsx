@@ -90,13 +90,13 @@ export default function App() {
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
-            className="fixed inset-0 z-[100] bg-[#F8F8F7] flex flex-col items-center justify-center border-[8px] sm:border-[12px] border-[#F3C324]"
+            className="fixed inset-0 z-[100] bg-[#FAF9F6] flex flex-col items-center justify-center border-t-8 border-[#D65D45]"
           >
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.5, ease: "easeOut" }}
-              className="w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden border-4 border-[#F3C324] shadow-sm bg-white mb-6"
+              className="w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden border border-[#2C1810]/10 shadow-lg bg-white mb-6"
             >
               <img src={logoImg} alt="Soda Tita Rosa Logo" className="w-full h-full object-contain p-2" />
             </motion.div>
@@ -104,7 +104,7 @@ export default function App() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.5 }}
-              className="text-2xl font-bold tracking-tighter text-[#110B0A]"
+              className="text-2xl font-bold tracking-tighter text-[#2C1810]"
             >
               Soda Tita Rosa
             </motion.h2>
@@ -114,7 +114,7 @@ export default function App() {
               {[0, 1, 2].map((i) => (
                 <motion.div
                   key={i}
-                  className="w-2 h-2 rounded-full bg-[#110B0A]"
+                  className="w-2 h-2 rounded-full bg-[#2C1810]"
                   animate={{
                     y: ["0%", "-50%", "0%"],
                     opacity: [0.5, 1, 0.5]
@@ -132,9 +132,9 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      <div className="min-h-screen bg-[#F8F8F7] text-[#110B0A] font-serif border-[8px] sm:border-[12px] border-[#F3C324]">
+      <div className="min-h-screen bg-[#FAF9F6] text-[#2C1810] font-serif border-t-8 border-[#D65D45]">
       {/* Header / Hero */}
-      <header className="px-6 sm:px-12 pt-10 pb-6 border-b border-[#110B0A]">
+      <header className="px-6 sm:px-12 pt-10 pb-6 border-b border-[#2C1810]/10 bg-white">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-baseline gap-6">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -142,12 +142,12 @@ export default function App() {
             transition={{ duration: 0.6 }}
             className="flex flex-col sm:flex-row items-start sm:items-center gap-6"
           >
-            <div className="w-24 h-24 sm:w-32 sm:h-32 shrink-0 rounded-full overflow-hidden border-4 border-[#F3C324] shadow-sm bg-white print:border-2 print:border-black">
+            <div className="w-24 h-24 sm:w-32 sm:h-32 shrink-0 rounded-full overflow-hidden border border-[#2C1810]/10 shadow-lg bg-white print:border-2 print:border-black">
               <img src={logoImg} alt="Soda Tita Rosa Logo" className="w-full h-full object-contain p-1" />
             </div>
             <div>
               <p className="text-[10px] tracking-[0.3em] uppercase font-sans mb-1 opacity-60">La Fortuna, San Carlos, CR</p>
-              <h1 className="text-5xl sm:text-7xl font-bold tracking-tighter leading-none text-[#110B0A] mb-2">
+              <h1 className="text-5xl sm:text-7xl font-bold tracking-tighter leading-none text-[#2C1810] mb-2">
                 Soda Tita Rosa
               </h1>
               
@@ -182,14 +182,14 @@ export default function App() {
               <div className="flex items-center gap-2 text-xs font-sans font-bold print:hidden">
                 <button
                   onClick={() => setLang('es')}
-                  className={`px-2 py-1 transition-colors ${lang === 'es' ? 'bg-[#110B0A] text-[#F8F8F7]' : 'text-[#110B0A] hover:bg-black/10'}`}
+                  className={`px-2 py-1 transition-colors ${lang === 'es' ? 'bg-[#2C1810] text-[#FAF9F6]' : 'text-[#2C1810] hover:bg-black/10'}`}
                 >
                   ES
                 </button>
                 <span className="opacity-30">|</span>
                 <button
                   onClick={() => setLang('en')}
-                  className={`px-2 py-1 transition-colors ${lang === 'en' ? 'bg-[#110B0A] text-[#F8F8F7]' : 'text-[#110B0A] hover:bg-black/10'}`}
+                  className={`px-2 py-1 transition-colors ${lang === 'en' ? 'bg-[#2C1810] text-[#FAF9F6]' : 'text-[#2C1810] hover:bg-black/10'}`}
                 >
                   EN
                 </button>
@@ -197,7 +197,7 @@ export default function App() {
 
               <button 
                 onClick={() => window.print()}
-                className="inline-flex items-center gap-2 px-4 py-2 border border-[#110B0A] text-[#110B0A] text-xs uppercase tracking-widest font-sans font-bold hover:bg-[#110B0A] hover:text-[#F8F8F7] transition-colors print:hidden"
+                className="inline-flex items-center gap-2 px-4 py-2 border border-[#2C1810] text-[#2C1810] text-xs uppercase tracking-widest font-sans font-bold hover:bg-[#2C1810] hover:text-[#FAF9F6] transition-colors print:hidden"
               >
                 <Printer size={14} />
                 {lang === 'es' ? 'Imprimir Menú (PDF)' : 'Print Menu (PDF)'}
@@ -208,7 +208,7 @@ export default function App() {
       </header>
 
       {/* Sticky Navigation & Search */}
-      <div className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-[#F8F8F7] shadow-sm border-b border-[#110B0A] py-4' : 'bg-[#F8F8F7] border-b border-[#110B0A] py-6'}`}>
+      <div className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md py-4' : 'bg-white border-b border-[#2C1810]/10 py-6'}`}>
         <div className="max-w-5xl mx-auto px-6 sm:px-12">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
             <div className="relative w-full md:w-72 print:hidden">
@@ -217,9 +217,9 @@ export default function App() {
                 placeholder={lang === 'es' ? 'Buscar en el menú...' : 'Search menu...'}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-transparent border border-[#110B0A] text-[#110B0A] px-4 py-2 pl-10 focus:outline-none focus:ring-1 focus:ring-[#110B0A] font-sans text-sm placeholder:text-[#110B0A]/50 transition-colors"
+                className="w-full bg-[#FAF9F6] border border-[#2C1810]/20 text-[#2C1810] px-4 py-2 pl-10 focus:outline-none focus:border-[#D65D45] focus:ring-1 focus:ring-[#D65D45] font-sans text-sm placeholder:text-[#2C1810]/40 transition-colors rounded-full"
               />
-              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 opacity-50" />
+              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#2C1810]/40" />
             </div>
           </div>
           <div className="flex overflow-x-auto hide-scrollbar gap-8 pb-2 sm:pb-0 sm:flex-wrap">
@@ -229,8 +229,8 @@ export default function App() {
                 onClick={() => scrollToCategory(category.id)}
                 className={`flex flex-col items-start whitespace-nowrap transition-colors uppercase font-sans font-bold
                   ${activeCategory === category.id 
-                    ? 'text-[#110B0A] border-b-2 border-[#F3C324] pb-1' 
-                    : 'text-[#110B0A] opacity-60 hover:opacity-100 pb-1 border-b-2 border-transparent'
+                    ? 'text-[#D65D45] border-b-2 border-[#D65D45] pb-1' 
+                    : 'text-[#2C1810] opacity-50 hover:opacity-100 pb-1 border-b-2 border-transparent'
                   }`}
               >
                 <span className="text-[11px] tracking-widest">{lang === 'es' ? category.title : (category.titleEn || category.title)}</span>
@@ -259,8 +259,8 @@ export default function App() {
             transition={{ duration: 0.5 }}
           >
             <div className="mb-10 text-center sm:text-left">
-              <h2 className="text-[11px] uppercase tracking-[0.4em] font-sans mb-1 opacity-60">{lang === 'es' ? 'Categoría' : 'Category'}</h2>
-              <div className="border-b-2 border-[#110B0A] pb-2 inline-block">
+              <h2 className="text-[11px] uppercase tracking-[0.4em] font-sans mb-1 text-[#D65D45] font-bold">{lang === 'es' ? 'Categoría' : 'Category'}</h2>
+              <div className="border-b border-[#2C1810]/20 pb-2 inline-block">
                 <h3 className="text-4xl font-bold italic inline">
                   {lang === 'es' ? category.title : (category.titleEn || category.title)}
                 </h3>
@@ -297,16 +297,16 @@ export default function App() {
                   }}
                 >
                   {item.popular && (
-                    <div className="absolute -left-4 top-0 w-1 h-full bg-[#110B0A] hidden sm:block"></div>
+                    <div className="absolute -left-4 top-0 w-1 h-full bg-[#D65D45] hidden sm:block rounded-full"></div>
                   )}
 
                   {item.imageUrl && (
-                    <div className="w-full h-48 mb-4 bg-[#F3C324] border-2 border-[#110B0A] overflow-hidden rounded-lg print:hidden">
+                    <div className="w-full h-48 mb-4 bg-stone-200 border border-[#2C1810]/10 overflow-hidden rounded-lg shadow-sm print:hidden">
                       <img src={item.imageUrl} alt={item.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     </div>
                   )}
                   
-                  <div className="flex justify-between items-end mb-1 border-b border-dotted border-[#110B0A]">
+                  <div className="flex justify-between items-end mb-1 border-b border-dotted border-[#2C1810]/30">
                     <div className="pb-1 pr-4">
                       <h4 className="text-xl md:text-2xl font-bold inline">
                         {lang === 'es' ? item.name : (item.nameEn || item.name)}
@@ -317,13 +317,13 @@ export default function App() {
                         </span>
                       )}
                     </div>
-                    <span className="font-sans font-bold text-lg text-[#110B0A] pb-1">
+                    <span className="font-sans font-bold text-lg text-[#2C1810] pb-1">
                       {formatPrice(item.price)}
                     </span>
                   </div>
                   
                   {item.popular && (
-                    <p className="text-[10px] uppercase tracking-widest font-sans mb-2 font-bold text-[#110B0A] mt-2">
+                    <p className="text-[10px] uppercase tracking-widest font-sans mb-2 font-bold text-[#2C1810] mt-2">
                       {lang === 'es' ? 'Lo Más Pedido' : 'Top Choice'}
                     </p>
                   )}
@@ -355,8 +355,8 @@ export default function App() {
             className="mb-24 print:hidden"
           >
             <div className="mb-10 text-center sm:text-left">
-              <h2 className="text-[11px] uppercase tracking-[0.4em] font-sans mb-1 opacity-60">{lang === 'es' ? 'Galería' : 'Gallery'}</h2>
-              <div className="border-b-2 border-[#110B0A] pb-2 inline-block">
+              <h2 className="text-[11px] uppercase tracking-[0.4em] font-sans mb-1 text-[#D65D45] font-bold">{lang === 'es' ? 'Galería' : 'Gallery'}</h2>
+              <div className="border-b border-[#2C1810]/20 pb-2 inline-block">
                 <h3 className="text-4xl font-bold italic inline">
                   {lang === 'es' ? 'Nuestros Platillos' : 'Our Dishes'}
                 </h3>
@@ -368,7 +368,7 @@ export default function App() {
             
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {galleryImages.map((img, i) => (
-                <div key={i} className="aspect-square bg-[#F3C324] rounded-lg overflow-hidden border-2 border-[#110B0A] relative group">
+                <div key={i} className="aspect-square bg-stone-200 rounded-lg overflow-hidden border border-[#2C1810]/10 shadow-sm relative group">
                   <img src={img.url} alt={img.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
                     <p className="text-white font-bold text-lg leading-tight">{img.title}</p>
@@ -390,8 +390,8 @@ export default function App() {
             className="mb-12 print:hidden"
           >
             <div className="mb-10 text-center sm:text-left">
-              <h2 className="text-[11px] uppercase tracking-[0.4em] font-sans mb-1 opacity-60">{lang === 'es' ? 'Testimonios' : 'Testimonials'}</h2>
-              <div className="border-b-2 border-[#110B0A] pb-2 inline-block">
+              <h2 className="text-[11px] uppercase tracking-[0.4em] font-sans mb-1 text-[#D65D45] font-bold">{lang === 'es' ? 'Testimonios' : 'Testimonials'}</h2>
+              <div className="border-b border-[#2C1810]/20 pb-2 inline-block">
                 <h3 className="text-4xl font-bold italic inline">
                   {lang === 'es' ? 'Opiniones de nuestros clientes' : 'Customer Reviews'}
                 </h3>
@@ -406,20 +406,20 @@ export default function App() {
                 <motion.div
                   key={review.id}
                   whileHover={{ y: -5 }}
-                  className="bg-white border-2 border-[#110B0A] p-6 rounded-lg shadow-[4px_4px_0_0_#110B0A]"
+                  className="bg-white border border-[#2C1810]/10 p-6 rounded-xl shadow-sm"
                 >
                   <div className="flex justify-between items-start mb-4">
                     <div>
                       <h4 className="font-bold text-lg">{review.author}</h4>
                       <p className="text-sm opacity-60 font-sans">{review.date}</p>
                     </div>
-                    <div className="flex gap-1 text-[#F3C324]">
+                    <div className="flex gap-1 text-[#D65D45]">
                       {[...Array(5)].map((_, i) => (
                         <Star
                           key={i}
                           size={16}
                           fill={i < review.rating ? "currentColor" : "none"}
-                          className={i < review.rating ? "text-[#F3C324]" : "text-gray-300"}
+                          className={i < review.rating ? "text-[#D65D45]" : "text-gray-300"}
                         />
                       ))}
                     </div>
@@ -433,17 +433,17 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-[#F3C324] border-t border-[#110B0A] p-10 flex flex-col justify-between items-center text-[#110B0A]">
+      <footer className="bg-[#2C1810] text-[#FAF9F6] p-12 flex flex-col justify-between items-center mt-12 print:hidden">
         <div className="text-[10px] uppercase tracking-widest text-center">
-          <p className="mb-1">{lang === 'es' ? 'Gracias por su visita' : 'Thanks for your visit'}</p>
-          <p className="font-bold text-[#110B0A]">{lang === 'es' ? 'Prohibido irse con hambre' : 'Leaving hungry is forbidden'}</p>
+          <p className="mb-2 text-[#D65D45] font-bold">{lang === 'es' ? 'Gracias por su visita' : 'Thanks for your visit'}</p>
+          <p className="font-serif italic text-2xl">{lang === 'es' ? 'Prohibido irse con hambre' : 'Leaving hungry is forbidden'}</p>
         </div>
         
         {/* Decorative Footer Elements */}
-        <div className="flex gap-4 items-center opacity-20 pointer-events-none mt-8">
-          <div className="h-[1px] w-24 sm:w-48 bg-[#110B0A]"></div>
-          <div className="w-2 h-2 rounded-full bg-[#110B0A]"></div>
-          <div className="h-[1px] w-24 sm:w-48 bg-[#110B0A]"></div>
+        <div className="flex gap-4 items-center opacity-40 pointer-events-none mt-8">
+          <div className="h-[1px] w-24 sm:w-48 bg-[#FAF9F6]"></div>
+          <div className="w-2 h-2 rounded-full bg-[#FAF9F6]"></div>
+          <div className="h-[1px] w-24 sm:w-48 bg-[#FAF9F6]"></div>
         </div>
       </footer>
       
