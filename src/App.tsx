@@ -25,6 +25,15 @@ export default function App() {
   const [activeCategory, setActiveCategory] = useState(menuData[0].id);
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time for smooth entrance
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1200);
+    return () => clearTimeout(timer);
+  }, []);
 
   const filteredMenuData = menuData.map(category => ({
     ...category,
@@ -66,7 +75,56 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F8F7] text-[#110B0A] font-serif border-[8px] sm:border-[12px] border-[#F3C324]">
+    <>
+      <AnimatePresence>
+        {isLoading && (
+          <motion.div
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            className="fixed inset-0 z-[100] bg-[#F8F8F7] flex flex-col items-center justify-center border-[8px] sm:border-[12px] border-[#F3C324]"
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              className="w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden border-4 border-[#F3C324] shadow-sm bg-white mb-6"
+            >
+              <img src="/Menu/logo.png" alt="Soda Tita Rosa Logo" className="w-full h-full object-contain p-2" />
+            </motion.div>
+            <motion.h2 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+              className="text-2xl font-bold tracking-tighter text-[#110B0A]"
+            >
+              Soda Tita Rosa
+            </motion.h2>
+            <motion.div
+              className="mt-6 flex gap-2"
+            >
+              {[0, 1, 2].map((i) => (
+                <motion.div
+                  key={i}
+                  className="w-2 h-2 rounded-full bg-[#110B0A]"
+                  animate={{
+                    y: ["0%", "-50%", "0%"],
+                    opacity: [0.5, 1, 0.5]
+                  }}
+                  transition={{
+                    duration: 0.8,
+                    repeat: Infinity,
+                    delay: i * 0.15,
+                    ease: "easeInOut"
+                  }}
+                />
+              ))}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <div className="min-h-screen bg-[#F8F8F7] text-[#110B0A] font-serif border-[8px] sm:border-[12px] border-[#F3C324]">
       {/* Header / Hero */}
       <header className="px-6 sm:px-12 pt-10 pb-6 border-b border-[#110B0A]">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-baseline gap-6">
@@ -77,7 +135,7 @@ export default function App() {
             className="flex flex-col sm:flex-row items-start sm:items-center gap-6"
           >
             <div className="w-24 h-24 sm:w-32 sm:h-32 shrink-0 rounded-full overflow-hidden border-4 border-[#F3C324] shadow-sm bg-white print:border-2 print:border-black">
-              <img src="/logo.png" alt="Soda Tita Rosa Logo" className="w-full h-full object-contain p-1" />
+              <img src="/Menu/logo.png" alt="Soda Tita Rosa Logo" className="w-full h-full object-contain p-1" />
             </div>
             <div>
               <p className="text-[10px] tracking-[0.3em] uppercase font-sans mb-1 opacity-60">La Fortuna, San Carlos, CR</p>
@@ -169,10 +227,10 @@ export default function App() {
             key={category.id}
             id={`section-${category.id}`}
             className="mb-24 scroll-mt-32"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
+            transition={{ duration: 0.5 }}
           >
             <div className="mb-10 text-center sm:text-left">
               <h2 className="text-[11px] uppercase tracking-[0.4em] font-sans mb-1 opacity-60">Categoría</h2>
@@ -188,11 +246,29 @@ export default function App() {
               </div>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-x-16 gap-y-12">
+            <motion.div 
+              className="grid md:grid-cols-2 gap-x-16 gap-y-12"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              variants={{
+                hidden: { opacity: 0 },
+                visible: {
+                  opacity: 1,
+                  transition: {
+                    staggerChildren: 0.1
+                  }
+                }
+              }}
+            >
               {category.items.map((item) => (
                 <motion.div 
                   key={item.id}
                   className="group relative"
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+                  }}
                 >
                   {item.popular && (
                     <div className="absolute -left-4 top-0 w-1 h-full bg-[#110B0A] hidden sm:block"></div>
@@ -238,7 +314,7 @@ export default function App() {
                   </div>
                 </motion.div>
               ))}
-            </div>
+            </motion.div>
           </motion.section>
           ))
         )}
@@ -315,5 +391,6 @@ export default function App() {
         }
       `}</style>
     </div>
+    </>
   );
 }
