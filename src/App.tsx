@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Coffee, Utensils, CupSoda, Cake, Pizza, Heart, Clock, MapPin, Phone, Wine, Printer } from 'lucide-react';
+import { Coffee, Utensils, CupSoda, Cake, Pizza, Heart, Clock, MapPin, Phone, Wine, Printer, MessageCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { menuData, galleryImages } from './data';
 
@@ -267,6 +267,17 @@ export default function App() {
         </div>
       </footer>
       
+      {/* Floating WhatsApp Button */}
+      <a
+        href="https://wa.me/50622223333?text=Hola,%20me%20gustar%C3%ADa%20hacer%20un%20pedido%20desde%20el%20men%C3%BA%20digital."
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:scale-110 transition-transform duration-300 print:hidden flex items-center justify-center"
+        aria-label="Pedir por WhatsApp"
+      >
+        <MessageCircle size={28} />
+      </a>
+
       <style>{`
         .hide-scrollbar::-webkit-scrollbar {
           display: none;
