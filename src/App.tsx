@@ -120,7 +120,7 @@ export default function App() {
               transition={{ duration: 0.5, ease: "easeOut" }}
               className="w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden border border-[#1A0A00]/10 shadow-lg bg-white mb-6"
             >
-              <img src="./logo.png" alt="Soda Tita Rosa Logo" className="w-full h-full object-contain p-2" />
+              <img src="/logo.png" alt="Soda Tita Rosa Logo" className="w-full h-full object-contain p-2" />
             </motion.div>
             <motion.h2 
               initial={{ opacity: 0, y: 10 }}
