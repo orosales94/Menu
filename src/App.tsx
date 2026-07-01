@@ -2,15 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Coffee, Utensils, CupSoda, Cake, Pizza, Heart, Clock, MapPin, Phone, Wine, Printer, MessageCircle, Search, Star, Info, Instagram, Facebook } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { menuData, galleryImages, reviewsData } from './data';
-import logoImg from './logo.png';
 
-const iconMap: Record<string, string> = {
-  Coffee: '☕',
-  Utensils: '🍽️',
-  CupSoda: '🥤',
-  Cake: '🍰',
-  Pizza: '🍕',
-  Wine: '🍷',
+const iconMap: Record<string, React.ElementType> = {
+  Coffee,
+  Utensils,
+  CupSoda,
+  Cake,
+  Pizza,
+  Wine,
 };
 
 const formatPrice = (price: number | string) => {
@@ -121,7 +120,7 @@ export default function App() {
               transition={{ duration: 0.5, ease: "easeOut" }}
               className="w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden border border-[#1A0A00]/10 shadow-lg bg-white mb-6"
             >
-              <img src={logoImg} alt="Soda Tita Rosa Logo" className="w-full h-full object-contain p-2" />
+              <img src="./logo.png" alt="Soda Tita Rosa Logo" className="w-full h-full object-contain p-2" />
             </motion.div>
             <motion.h2 
               initial={{ opacity: 0, y: 10 }}
@@ -164,10 +163,10 @@ export default function App() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 w-full text-center sm:text-left"
+            className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 flex-1 text-center sm:text-left"
           >
             <div className="w-16 h-16 sm:w-28 sm:h-28 shrink-0 rounded-full overflow-hidden border-2 border-[#EDD9C0] shadow-sm bg-white print:border-2 print:border-black">
-              <img src={logoImg} alt="Soda Tita Rosa Logo" className="w-full h-full object-contain p-1" />
+              <img src="./logo.png" alt="Soda Tita Rosa Logo" className="w-full h-full object-contain p-1" />
             </div>
             <div className="w-full">
               <p className="text-[10px] tracking-[0.3em] uppercase font-sans mb-1 opacity-60">La Fortuna, San Carlos, CR</p>
@@ -182,7 +181,7 @@ export default function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.6 }}
-            className="text-center md:text-right w-full md:w-auto"
+            className="text-center md:text-right w-full md:w-auto md:shrink-0"
           >
             
             <button 
@@ -193,21 +192,21 @@ export default function App() {
               {lang === 'es' ? 'Información' : 'Information'}
             </button>
             
-            <div className={`flex-col md:flex md:flex-row gap-2 md:gap-4 text-[10px] font-sans tracking-widest uppercase opacity-80 justify-center md:justify-end mb-4 ${showMobileInfo ? 'flex' : 'hidden'}`}>
-              <div className="flex items-center justify-center md:justify-start gap-2">
-                <Clock size={12} className="text-[#E67E22]" />
-                <span>{lang === 'es' ? 'Lun - Sab' : 'Mon - Sat'}: 6AM - 4PM</span>
-                <span className={`px-2 py-0.5 rounded text-[0.72rem] font-bold tracking-normal ml-2 print:hidden ${isOpen ? 'text-[#27AE60] bg-[#27AE60]/10' : 'text-[#C0392B] bg-[#C0392B]/10'}`}>
+            <div className={`flex-col md:flex md:flex-row gap-4 md:gap-6 text-[10px] font-sans tracking-widest uppercase opacity-80 justify-center md:justify-end mb-4 ${showMobileInfo ? 'flex' : 'hidden'}`}>
+              <div className="flex items-center justify-center md:justify-end gap-2">
+                <Clock size={12} className="text-[#E67E22] shrink-0" />
+                <span className="whitespace-nowrap">{lang === 'es' ? 'Lun - Sab' : 'Mon - Sat'}: 6AM - 4PM</span>
+                <span className={`whitespace-nowrap px-2 py-0.5 rounded text-[0.72rem] font-bold tracking-normal ml-2 print:hidden ${isOpen ? 'text-[#27AE60] bg-[#27AE60]/10' : 'text-[#C0392B] bg-[#C0392B]/10'}`}>
                   {isOpen ? (lang === 'es' ? '🟢 Abierto ahora' : '🟢 Open now') : (lang === 'es' ? '🔴 Cerrado' : '🔴 Closed')}
                 </span>
               </div>
-              <a href="tel:+50622223333" className="flex items-center justify-center md:justify-start gap-2 hover:text-[#C0392B] transition-colors">
-                <Phone size={12} className="text-[#E67E22]" />
-                <span>+(506) 2222-3333</span>
+              <a href="tel:+50622223333" className="flex items-center justify-center md:justify-end gap-2 hover:text-[#C0392B] transition-colors">
+                <Phone size={12} className="text-[#E67E22] shrink-0" />
+                <span className="whitespace-nowrap">+(506) 2222-3333</span>
               </a>
-              <a href="https://maps.google.com/?q=La+Fortuna,+San+Carlos,+Costa+Rica" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center md:justify-start gap-2 hover:text-[#C0392B] transition-colors">
-                <MapPin size={12} className="text-[#E67E22]" />
-                <span>La Fortuna</span>
+              <a href="https://maps.google.com/?q=La+Fortuna,+San+Carlos,+Costa+Rica" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center md:justify-end gap-2 hover:text-[#C0392B] transition-colors">
+                <MapPin size={12} className="text-[#E67E22] shrink-0" />
+                <span className="whitespace-nowrap">La Fortuna</span>
               </a>
             </div>
             
@@ -264,7 +263,7 @@ export default function App() {
                   }`}
               >
                 <span className="text-xl sm:text-base sm:mr-2 mb-1 sm:mb-0 sm:inline-block flex items-center gap-2">
-                  <span className="text-[1.3rem]">{iconMap[category.icon]}</span>
+                  <span className="text-[1.3rem]">{React.createElement(iconMap[category.iconName] || Utensils, { size: 20 })}</span>
                   <span className="hidden sm:inline-block text-[11px] tracking-widest">{lang === 'es' ? category.title : (category.titleEn || category.title)}</span>
                 </span>
                 
@@ -314,7 +313,7 @@ export default function App() {
               <div>
                 <h2 className="text-[11px] uppercase tracking-[0.4em] font-sans mb-2 text-[#C0392B] font-bold">{lang === 'es' ? 'Categoría' : 'Category'}</h2>
                 <div className="inline-flex items-center gap-3">
-                  <span className="text-[1.8rem]">{iconMap[category.icon]}</span>
+                  <span className="text-[1.8rem]">{React.createElement(iconMap[category.iconName] || Utensils, { size: 28 })}</span>
                   <h3 className="text-[1.6rem] font-bold italic font-serif text-[#1A0A00]">
                     {lang === 'es' ? category.title : (category.titleEn || category.title)}
                   </h3>
